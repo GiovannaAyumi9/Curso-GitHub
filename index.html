@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10101b">
+  <meta name="description" content="Minicurso interativo e gratuito de GitHub do Zero. Aprenda Git, repositórios, commits, branches, Pull Requests e colaboração direto no navegador.">
+  <title>GitHub do Zero — Aprenda fazendo</title>
+
+  <!-- Aplica o tema salvo antes da página aparecer (evita "piscar") -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("ghdz-theme");
+        var prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        var theme = saved || (prefersLight ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <!-- Fundo dinâmico -->
+  <div class="bg-fx" aria-hidden="true">
+    <div class="bg-aurora aurora-1"></div>
+    <div class="bg-aurora aurora-2"></div>
+    <div class="bg-aurora aurora-3"></div>
+    <div class="bg-grid"></div>
+    <canvas id="bgCanvas"></canvas>
+  </div>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+
+  <!-- ==================== CABEÇALHO ==================== -->
+  <header class="header" id="header">
+    <a class="brand" href="#home" aria-label="GitHub do Zero, início">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 48 48"><path d="M24 3 44 14.5v19L24 45 4 33.5v-19L24 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 30V18l10 8 10-8v12M14 18l10 8 10-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand-name">github<span>do zero</span></span>
+    </a>
+
+    <nav class="navigation" id="navigation" aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#trilha">Trilha</a>
+      <a href="#glossario">Glossário</a>
+      <a href="#comandos">Comandos</a>
+      <a href="#pratica">Desafio</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#certificado">Certificado</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button" id="themeToggle" aria-label="Alternar entre tema claro e escuro" title="Alternar tema"></button>
+      <button class="account-button" id="accountBtn" type="button" aria-haspopup="dialog">
+        <span class="account-avatar" id="accountAvatar" aria-hidden="true">☺</span>
+        <span class="account-label" id="accountLabel">Entrar</span>
+      </button>
+      <a class="header-cta" href="https://github.com/" target="_blank" rel="noopener noreferrer">Abrir GitHub <span aria-hidden="true">↗</span></a>
+      <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu" aria-expanded="false" aria-controls="navigation"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero" id="home">
+      <div class="hero-glow glow-a"></div>
+      <div class="hero-glow glow-b"></div>
+
+      <div class="hero-copy reveal">
+        <div class="status-pill"><span class="pulse"></span> Minicurso gratuito · Nível iniciante</div>
+        <h1>Do primeiro arquivo<br>ao trabalho em <em>equipe.</em></h1>
+        <p class="hero-description">Domine o GitHub com um guia prático, visual e direto ao ponto. Leia, pratique no seu ritmo e transforme o que aprendeu em um projeto de verdade — tudo pelo navegador, sem instalar nada.</p>
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="#trilha">Começar a aprender <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="#sobre">Conhecer o curso</a>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>módulos</dt><dd id="statModules">04</dd></div>
+          <div><dt>termos no glossário</dt><dd id="statTerms">14</dd></div>
+          <div><dt>perguntas no quiz</dt><dd id="statQuiz">08</dd></div>
+          <div><dt>projeto final</dt><dd>01</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="visual-orbit orbit-1"></div>
+        <div class="visual-orbit orbit-2"></div>
+        <div class="terminal-card">
+          <div class="terminal-top">
+            <div class="traffic"><b></b><b></b><b></b></div>
+            <span>meu-primeiro-repositorio</span>
+            <span class="terminal-lock">⌑</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-label">ESTRUTURA DO PROJETO</div>
+            <div class="tree-line"><span class="tree-icon purple">▰</span><b>meu-projeto/</b></div>
+            <div class="tree-line indent"><span class="tree-icon cyan">▤</span>README.md <small>apresentação</small></div>
+            <div class="tree-line indent"><span class="tree-icon orange">▤</span>index.html <small>página</small></div>
+            <div class="tree-line indent"><span class="tree-icon pink">▤</span>style.css <small>estilos</small></div>
+            <div class="terminal-divider"></div>
+            <div class="terminal-commit">
+              <span class="commit-check">✓</span>
+              <div><b>commit realizado</b><small>adiciona arquivos iniciais</small></div>
+              <span class="commit-time">agora</span>
+            </div>
+          </div>
+          <div class="terminal-bottom"><span>⑂ main</span><span>● sincronizado</span></div>
+        </div>
+        <div class="floating-badge badge-top"><span>✦</span> Aprenda fazendo</div>
+        <div class="floating-badge badge-bottom"><span>✓</span> Projeto organizado</div>
+      </div>
+
+      <a class="scroll-cue" href="#sobre"><span></span> ROLE PARA EXPLORAR</a>
+    </section>
+
+    <!-- ==================== SOBRE ==================== -->
+    <section class="about section-wrap" id="sobre">
+      <div class="section-kicker">01 / SOBRE O CURSO</div>
+      <div class="about-grid">
+        <h2>Aprender tecnologia<br>é <span>construir.</span></h2>
+        <div class="about-copy">
+          <p>O GitHub é uma das ferramentas mais usadas do mundo para organizar projetos e colaborar com outras pessoas — de trabalhos escolares a grandes softwares de código aberto. Neste minicurso você vai entender os conceitos e praticar os principais recursos diretamente pelo navegador.</p>
+          <div class="about-note"><span aria-hidden="true">✳</span> Sem precisar instalar o Git ou usar o terminal nas atividades principais.</div>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-icon" aria-hidden="true">◎</span>
+          <h3>Zero instalação</h3>
+          <p>Todo o conteúdo e as atividades principais funcionam pelo site do GitHub, no navegador do computador ou do celular.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon" aria-hidden="true">☰</span>
+          <h3>Passo a passo</h3>
+          <p>Cada módulo explica o conceito, mostra o caminho exato dos cliques e termina com dicas para evitar os erros mais comuns.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon" aria-hidden="true">↻</span>
+          <h3>Progresso salvo</h3>
+          <p>Módulos, checklist e resultado do quiz ficam guardados neste navegador. Pare quando quiser e continue depois.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon" aria-hidden="true">✦</span>
+          <h3>Projeto de verdade</h3>
+          <p>Ao final você terá um repositório seu, com README, commits e um Pull Request — a base de um portfólio.</p>
+        </article>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-card">
+          <h3>Para quem é</h3>
+          <ul class="check-list">
+            <li>Estudantes que vão fazer trabalhos em grupo</li>
+            <li>Quem quer começar a programar e montar um portfólio</li>
+            <li>Pessoas de outras áreas que precisam colaborar em projetos</li>
+            <li>Qualquer pessoa curiosa sobre versionamento de arquivos</li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <h3>O que você vai conseguir fazer</h3>
+          <ul class="check-list">
+            <li>Criar e organizar um repositório com README</li>
+            <li>Registrar alterações com commits claros</li>
+            <li>Trabalhar com branches sem bagunçar a versão principal</li>
+            <li>Abrir, revisar e integrar um Pull Request</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== COMO FUNCIONA (FLUXO) ==================== -->
+    <section class="flow-section section-wrap" id="fluxo">
+      <div class="section-kicker">02 / VISÃO GERAL</div>
+      <h2>O caminho de uma <span>mudança.</span></h2>
+      <p class="section-lead">Quase tudo que você fará no GitHub segue este ciclo. Guarde essa imagem: ela resume o curso inteiro.</p>
+      <ol class="flow">
+        <li class="flow-step">
+          <span class="flow-number">1</span>
+          <h3>Repositório</h3>
+          <p>O projeto vive em um repositório, com arquivos e histórico.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-number">2</span>
+          <h3>Branch</h3>
+          <p>Você cria uma linha de trabalho separada para testar ideias.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-number">3</span>
+          <h3>Commit</h3>
+          <p>Cada alteração é registrada com uma mensagem clara.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-number">4</span>
+          <h3>Pull Request</h3>
+          <p>Você propõe a mudança e outras pessoas revisam.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-number">5</span>
+          <h3>Merge</h3>
+          <p>Aprovada, a mudança entra na versão principal.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ==================== TRILHA / MÓDULOS ==================== -->
+    <section class="path-section section-wrap" id="trilha">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">03 / SUA JORNADA</div>
+          <h2>Uma trilha. Quatro etapas.<br><span>Novas possibilidades.</span></h2>
+        </div>
+        <div class="overall-progress">
+          <div class="progress-caption"><span>Seu progresso</span><strong id="progressLabel">0%</strong></div>
+          <div class="progress-track" role="progressbar" aria-label="Progresso nos módulos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="overallTrack"><div class="progress-bar" id="overallBar"></div></div>
+          <small id="progressDetail">0 de 4 módulos concluídos</small>
+        </div>
+      </div>
+
+      <div class="module-layout">
+        <div class="module-list" role="tablist" aria-label="Módulos do minicurso" id="moduleList">
+          <!-- Abas geradas por script.js -->
+          <div class="module-tip">
+            <span aria-hidden="true">✦</span>
+            <p><b>Dica de estudo</b><br>Leia, teste os passos no GitHub e marque o módulo quando terminar. Use as setas do teclado para trocar de aba.</p>
+          </div>
+        </div>
+
+        <article class="lesson-card" id="lessonCard" role="tabpanel" aria-live="polite">
+          <div class="lesson-topline"><span id="lessonTag">MÓDULO 01</span><span class="lesson-time" id="lessonTime">◷ 10–15 MIN</span></div>
+          <h3 id="lessonTitle">Conhecendo o GitHub</h3>
+          <p class="lesson-intro" id="lessonIntro"></p>
+          <ul class="lesson-goals" id="lessonGoals" aria-label="Objetivos do módulo"></ul>
+          <div class="lesson-body" id="lessonBody"></div>
+          <div class="lesson-actions">
+            <div class="lesson-nav">
+              <button class="btn btn-ghost btn-small" id="prevModule" type="button"><span aria-hidden="true">←</span> Anterior</button>
+              <button class="btn btn-ghost btn-small" id="nextModule" type="button">Próximo <span aria-hidden="true">→</span></button>
+            </div>
+            <span class="lesson-status" id="lessonStatus">Continue no seu ritmo.</span>
+            <button class="btn btn-primary btn-small" id="markComplete" type="button">Concluir módulo <span aria-hidden="true">✓</span></button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== GLOSSÁRIO ==================== -->
+    <section class="glossary-section" id="glossario">
+      <div class="section-wrap">
+        <div class="glossary-head">
+          <div>
+            <div class="section-kicker">04 / VOCABULÁRIO ESSENCIAL</div>
+            <h2>Palavras que você<br>vai encontrar <span>por aqui.</span></h2>
+          </div>
+          <div class="glossary-tools">
+            <label class="search-box">
+              <span class="sr-only">Buscar termo</span>
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="glossarySearch" placeholder="Buscar termo… (ex.: branch)" autocomplete="off">
+            </label>
+            <div class="chip-filter" id="glossaryFilter" role="group" aria-label="Filtrar glossário"></div>
+          </div>
+        </div>
+        <div class="glossary-grid" id="glossaryGrid"></div>
+        <p class="glossary-empty" id="glossaryEmpty" hidden>Nenhum termo encontrado. Tente outra palavra.</p>
+      </div>
+    </section>
+
+    <!-- ==================== COMANDOS (OPCIONAL) ==================== -->
+    <section class="commands-section section-wrap" id="comandos">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">05 / PRÓXIMO NÍVEL (OPCIONAL)</div>
+          <h2>Guia rápido de <span>comandos Git.</span></h2>
+          <p class="section-lead">Você não precisa deles para concluir o curso. Mas, quando quiser trabalhar pelo terminal, aqui estão os comandos mais usados. Clique em um comando para copiar.</p>
+        </div>
+      </div>
+      <div class="command-tabs" id="commandTabs" role="tablist" aria-label="Categorias de comandos"></div>
+      <div class="command-panel" id="commandPanel" role="tabpanel" aria-live="polite"></div>
+      <div class="about-note commands-note"><span aria-hidden="true">✳</span> <p>Para usar o Git no terminal, instale-o em <a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">git-scm.com</a> e configure seu nome e e-mail uma única vez.</p></div>
+    </section>
+
+    <!-- ==================== DESAFIO ==================== -->
+    <section class="challenge-section section-wrap" id="pratica">
+      <div class="challenge-intro">
+        <div class="section-kicker">06 / MÃO NA MASSA</div>
+        <h2>Seu primeiro projeto<br>começa <span>agora.</span></h2>
+        <p>Crie um repositório de estudos e pratique o que aprendeu. Acompanhe as etapas por aqui: seu progresso fica salvo neste navegador.</p>
+        <ul class="challenge-facts">
+          <li><b>Tempo estimado</b><span>30–40 minutos</span></li>
+          <li><b>Você precisa de</b><span>Uma conta no GitHub</span></li>
+          <li><b>Resultado</b><span>Repositório + Pull Request</span></li>
+        </ul>
+        <a class="btn btn-primary" href="https://github.com/new" target="_blank" rel="noopener noreferrer">Criar meu repositório <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="task-card" id="taskCard">
+        <div class="task-card-head">
+          <div><span class="task-eyebrow">DESAFIO FINAL</span><h3>Meu repositório de estudos</h3></div>
+          <div class="task-count" id="taskCount">0/6</div>
+        </div>
+        <div class="task-progress" role="progressbar" aria-label="Progresso do desafio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="taskTrack"><div id="taskBar"></div></div>
+        <div class="task-items" id="taskItems"><!-- Tarefas geradas por script.js --></div>
+        <div class="task-footer">
+          <span id="taskMessage">Cada etapa concluída é um avanço!</span>
+          <button id="resetTasks" class="reset-button" type="button">Reiniciar checklist ↺</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== QUIZ ==================== -->
+    <section class="quiz-section" id="quiz">
+      <div class="section-wrap quiz-wrap">
+        <div class="quiz-copy">
+          <div class="section-kicker">07 / TESTE SEU CONHECIMENTO</div>
+          <h2>Aprendeu? Então<br><span>vamos conferir.</span></h2>
+          <p>Responda perguntas rápidas sobre o conteúdo do minicurso e veja seu resultado na hora. Cada resposta vem com uma explicação para fixar o conceito.</p>
+          <div class="quiz-best" id="quizBest" hidden></div>
+          <div class="quiz-decoration" aria-hidden="true">?</div>
+        </div>
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-head"><span>QUIZ RÁPIDO</span><span id="quizStep">PERGUNTA 1 DE 8</span></div>
+          <div class="quiz-progress" aria-hidden="true"><div id="quizProgress"></div></div>
+          <div id="quizContent"></div>
+          <div class="quiz-footer">
+            <span id="quizFeedback" aria-live="polite">Escolha uma alternativa.</span>
+            <button class="btn btn-primary btn-small" id="quizNext" type="button" disabled>Próxima <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CERTIFICADO ==================== -->
+    <section class="cert-section section-wrap" id="certificado">
+      <div class="cert-layout">
+        <div class="cert-copy">
+          <div class="section-kicker">08 / SEU CERTIFICADO</div>
+          <h2>Concluiu a jornada?<br><span>Leve o certificado.</span></h2>
+          <p>Ao terminar os quatro módulos, o desafio final e o quiz, você gera um certificado de conclusão com o seu nome para baixar ou imprimir.</p>
+          <p class="cert-note"><span aria-hidden="true">✳</span> Certificado de participação em material educativo gratuito, sem validade oficial. Ele fica salvo na sua conta, neste navegador.</p>
+        </div>
+
+        <div class="cert-card" id="certCard">
+          <div class="task-card-head">
+            <div><span class="task-eyebrow">REQUISITOS</span><h3>Para gerar o certificado</h3></div>
+            <div class="task-count" id="certCount">0/4</div>
+          </div>
+          <div class="task-progress" role="progressbar" aria-label="Requisitos do certificado cumpridos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="certTrack"><div id="certBar"></div></div>
+          <ul class="cert-reqs" id="certReqs"><!-- gerado por script.js --></ul>
+          <div class="cert-actions" id="certActions"><!-- gerado por script.js --></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SEGURANÇA ==================== -->
+    <section class="security section-wrap" id="seguranca">
+      <div class="security-head">
+        <div class="security-symbol" aria-hidden="true">⌑</div>
+        <div>
+          <div class="section-kicker">SEGURANÇA EM PRIMEIRO LUGAR</div>
+          <h2>Compartilhe seus projetos.<br><span>Proteja seus dados.</span></h2>
+          <p>Nunca publique senhas, tokens de acesso ou códigos de autenticação. Antes de tornar um repositório público, revise todos os arquivos e confira se não há informações pessoais.</p>
+        </div>
+      </div>
+      <div class="security-grid">
+        <article class="security-card">
+          <span class="security-num">01</span>
+          <h3>Segredos ficam de fora</h3>
+          <p>Senhas, chaves de API e tokens nunca devem entrar em um commit. Se um segredo vazar, troque-o imediatamente — apagar o arquivo depois não basta, pois o histórico guarda tudo.</p>
+        </article>
+        <article class="security-card">
+          <span class="security-num">02</span>
+          <h3>Ative a verificação em duas etapas</h3>
+          <p>Em <b>Settings → Password and authentication</b> você ativa a autenticação em dois fatores (2FA) e protege sua conta mesmo que a senha seja descoberta.</p>
+        </article>
+        <article class="security-card">
+          <span class="security-num">03</span>
+          <h3>Revise antes de publicar</h3>
+          <p>Antes de deixar um repositório público, abra os arquivos um a um. Procure nomes, telefones, e-mails, endereços e fotos que não deveriam estar ali.</p>
+        </article>
+        <article class="security-card">
+          <span class="security-num">04</span>
+          <h3>Use o .gitignore</h3>
+          <p>Arquivos como <code>.env</code> e pastas de configuração pessoal podem ser listados no <code>.gitignore</code> para que o Git nunca os envie ao repositório.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="faq-section section-wrap" id="faq">
+      <div class="faq-layout">
+        <div class="faq-intro">
+          <div class="section-kicker">09 / DÚVIDAS FREQUENTES</div>
+          <h2>Ficou com <span>alguma dúvida?</span></h2>
+          <p>Reunimos as perguntas mais comuns de quem está começando. Se a sua não estiver aqui, a documentação oficial é o melhor próximo passo.</p>
+        </div>
+        <div class="faq-list" id="faqList"></div>
+      </div>
+    </section>
+
+    <!-- ==================== REFERÊNCIAS ==================== -->
+    <section class="references section-wrap" id="fontes">
+      <div class="section-kicker">10 / CONTINUE EXPLORANDO</div>
+      <h2>Conhecimento bom tem <span>fonte confiável.</span></h2>
+      <div class="reference-grid">
+        <a href="https://docs.github.com/pt/get-started" target="_blank" rel="noopener noreferrer">
+          <span class="reference-index">01</span>
+          <div><small>DOCUMENTAÇÃO OFICIAL</small><b>Começar a usar o GitHub</b><p>Conceitos e primeiros passos da plataforma.</p></div>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+        <a href="https://docs.github.com/pt/repositories" target="_blank" rel="noopener noreferrer">
+          <span class="reference-index">02</span>
+          <div><small>REPOSITÓRIOS</small><b>Trabalhar com repositórios</b><p>Organização, criação e edição de projetos.</p></div>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+        <a href="https://docs.github.com/pt/pull-requests" target="_blank" rel="noopener noreferrer">
+          <span class="reference-index">03</span>
+          <div><small>COLABORAÇÃO</small><b>Entender Pull Requests</b><p>Revisão e integração de mudanças.</p></div>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+        <a href="https://docs.github.com/pt/get-started/writing-on-github" target="_blank" rel="noopener noreferrer">
+          <span class="reference-index">04</span>
+          <div><small>ESCRITA E MARKDOWN</small><b>Escrever no GitHub</b><p>Formatação de textos, README e comentários.</p></div>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+        <a href="https://git-scm.com/book/pt-br/v2" target="_blank" rel="noopener noreferrer">
+          <span class="reference-index">05</span>
+          <div><small>LIVRO GRATUITO</small><b>Pro Git em português</b><p>O guia completo sobre Git, do básico ao avançado.</p></div>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+        <a href="https://skills.github.com/" target="_blank" rel="noopener noreferrer">
+          <span class="reference-index">06</span>
+          <div><small>CURSOS PRÁTICOS</small><b>GitHub Skills</b><p>Exercícios interativos criados pelo próprio GitHub.</p></div>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+      </div>
+      <p class="source-note">Material educativo para fins acadêmicos. A aparência e os nomes dos menus do GitHub podem mudar conforme atualizações da plataforma.</p>
+    </section>
+  </main>
+
+  <!-- ==================== RODAPÉ ==================== -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="#home" aria-label="GitHub do Zero, início">
+          <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 3 44 14.5v19L24 45 4 33.5v-19L24 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 30V18l10 8 10-8v12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="brand-name">github<span>do zero</span></span>
+        </a>
+        <p>Um minicurso interativo para aprender, praticar e colaborar. ✦</p>
+      </div>
+      <nav class="footer-links" aria-label="Rodapé">
+        <div>
+          <h4>Curso</h4>
+          <a href="#sobre">Sobre</a>
+          <a href="#trilha">Trilha</a>
+          <a href="#glossario">Glossário</a>
+          <a href="#comandos">Comandos</a>
+        </div>
+        <div>
+          <h4>Pratique</h4>
+          <a href="#pratica">Desafio final</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#certificado">Certificado</a>
+          <a href="#faq">Dúvidas</a>
+          <a href="#seguranca">Segurança</a>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="https://docs.github.com/pt" target="_blank" rel="noopener noreferrer">Documentação ↗</a>
+          <a href="https://skills.github.com/" target="_blank" rel="noopener noreferrer">GitHub Skills ↗</a>
+          <a href="https://git-scm.com/book/pt-br/v2" target="_blank" rel="noopener noreferrer">Pro Git ↗</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> GitHub do Zero · Material educativo</span>
+      <button class="reset-button" id="resetAll" type="button">Apagar todo o meu progresso</button>
+      <a href="#home">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+
+  <!-- ==================== CADASTRO / LOGIN ==================== -->
+  <dialog class="auth-dialog" id="authDialog" aria-labelledby="authTitle">
+    <div class="auth-shell">
+      <aside class="auth-side">
+        <div class="auth-side-pane" data-pane="register">
+          <span class="auth-side-kicker">PRIMEIRO ACESSO</span>
+          <h2>Crie seu cadastro e <span>guarde sua jornada.</span></h2>
+          <ul class="check-list">
+            <li>Seu progresso fica salvo na sua conta</li>
+            <li>Certificado com o seu nome ao concluir</li>
+            <li>Gratuito e sem enviar dados para servidores</li>
+          </ul>
+        </div>
+        <div class="auth-side-pane" data-pane="login" hidden>
+          <span class="auth-side-kicker">BEM-VINDO(A) DE VOLTA</span>
+          <h2>Continue de <span>onde parou.</span></h2>
+          <p>Entre com o e-mail e a senha que você cadastrou neste navegador para recuperar seu progresso e seu certificado.</p>
+          <p class="auth-side-link">Primeira vez por aqui? <button type="button" class="link-button" data-switch="register">Faça seu cadastro</button></p>
+        </div>
+        <div class="auth-side-pane" data-pane="account" hidden>
+          <span class="auth-side-kicker">MINHA CONTA</span>
+          <h2>Tudo certo <span>por aqui.</span></h2>
+          <p>Seu progresso é salvo automaticamente enquanto você estiver conectado(a).</p>
+        </div>
+      </aside>
+
+      <div class="auth-main">
+        <button class="auth-close" id="authClose" type="button" aria-label="Fechar">✕</button>
+
+        <div class="auth-tabs" id="authTabs" role="tablist" aria-label="Cadastro ou entrada">
+          <button type="button" role="tab" id="tabRegister" data-switch="register" aria-selected="true">Primeiro acesso</button>
+          <button type="button" role="tab" id="tabLogin" data-switch="login" aria-selected="false">Já tenho cadastro</button>
+        </div>
+
+        <!-- Cadastro (primeiro acesso) -->
+        <form class="auth-form" id="registerForm" novalidate>
+          <h3 id="authTitle">Criar meu cadastro</h3>
+          <p class="auth-lead">Leva menos de um minuto. Use o nome que deve aparecer no certificado.</p>
+
+          <div class="field">
+            <label for="regName">Nome completo</label>
+            <input id="regName" name="name" type="text" autocomplete="name" maxlength="80" required>
+            <small class="field-error" id="regNameErr" role="alert"></small>
+          </div>
+          <div class="field">
+            <label for="regEmail">E-mail</label>
+            <input id="regEmail" name="email" type="email" autocomplete="email" inputmode="email" required>
+            <small class="field-error" id="regEmailErr" role="alert"></small>
+          </div>
+          <div class="field">
+            <label for="regPass">Crie uma senha</label>
+            <div class="pass-wrap">
+              <input id="regPass" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="passHint">
+              <button type="button" class="pass-toggle" data-toggle="regPass" aria-label="Mostrar senha">Mostrar</button>
+            </div>
+            <div class="strength" aria-hidden="true"><span id="strengthBar"></span></div>
+            <small class="field-hint" id="passHint">Mínimo de 8 caracteres, com letras e números. <b id="strengthText"></b></small>
+            <small class="field-error" id="regPassErr" role="alert"></small>
+          </div>
+          <div class="field">
+            <label for="regPass2">Repita a senha</label>
+            <div class="pass-wrap">
+              <input id="regPass2" name="password2" type="password" autocomplete="new-password" required>
+              <button type="button" class="pass-toggle" data-toggle="regPass2" aria-label="Mostrar senha">Mostrar</button>
+            </div>
+            <small class="field-error" id="regPass2Err" role="alert"></small>
+          </div>
+
+          <p class="form-error" id="registerError" role="alert" hidden></p>
+          <button class="btn btn-primary auth-submit" type="submit">Criar cadastro <span aria-hidden="true">→</span></button>
+          <p class="auth-foot">Os cadastros ficam salvos só neste navegador (não há servidor). Em outro aparelho, será preciso criar um novo.</p>
+        </form>
+
+        <!-- Login (quem já tem cadastro) -->
+        <form class="auth-form" id="loginForm" novalidate hidden>
+          <h3>Entrar na minha conta</h3>
+          <p class="auth-lead">Use o e-mail e a senha do seu cadastro.</p>
+
+          <div class="field">
+            <label for="logEmail">E-mail</label>
+            <input id="logEmail" name="email" type="email" autocomplete="username" inputmode="email" required>
+          </div>
+          <div class="field">
+            <label for="logPass">Senha</label>
+            <div class="pass-wrap">
+              <input id="logPass" name="password" type="password" autocomplete="current-password" required>
+              <button type="button" class="pass-toggle" data-toggle="logPass" aria-label="Mostrar senha">Mostrar</button>
+            </div>
+          </div>
+
+          <p class="form-error" id="loginError" role="alert" hidden></p>
+          <button class="btn btn-primary auth-submit" type="submit">Entrar <span aria-hidden="true">→</span></button>
+          <p class="auth-foot">Esqueceu a senha? Como não há servidor, ela não pode ser recuperada. Nesse caso, faça um novo cadastro com outro e-mail.</p>
+        </form>
+
+        <!-- Minha conta (já conectado) -->
+        <div class="auth-form" id="accountView" hidden>
+          <h3>Minha conta</h3>
+          <dl class="account-info">
+            <div><dt>Nome</dt><dd id="accName"></dd></div>
+            <div><dt>E-mail</dt><dd id="accEmail"></dd></div>
+            <div><dt>Cadastro criado em</dt><dd id="accSince"></dd></div>
+          </dl>
+          <div class="account-buttons">
+            <a class="btn btn-outline" href="#certificado" id="accCertLink">Ver meu certificado</a>
+            <button class="btn btn-ghost" type="button" id="logoutBtn">Sair</button>
+          </div>
+          <button class="reset-button" type="button" id="deleteAccountBtn">Excluir minha conta e meu progresso</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ==================== CERTIFICADO (visualização) ==================== -->
+  <dialog class="cert-dialog" id="certDialog" aria-labelledby="certDialogTitle">
+    <div class="cert-dialog-head">
+      <h3 id="certDialogTitle">Seu certificado</h3>
+      <button class="auth-close" id="certClose" type="button" aria-label="Fechar">✕</button>
+    </div>
+    <div class="field cert-name-field">
+      <label for="certName">Nome que aparece no certificado</label>
+      <input id="certName" type="text" maxlength="80" autocomplete="name">
+    </div>
+    <div class="cert-preview"><canvas id="certCanvas" width="1600" height="1131" role="img" aria-label="Prévia do certificado de conclusão"></canvas></div>
+    <div class="cert-dialog-actions">
+      <button class="btn btn-primary" type="button" id="certDownload">Baixar imagem (PNG) <span aria-hidden="true">↓</span></button>
+      <button class="btn btn-outline" type="button" id="certPrint">Imprimir ou salvar em PDF</button>
+    </div>
+    <p class="cert-hint">Para salvar em PDF, escolha “Salvar como PDF” na janela de impressão e deixe a página na horizontal.</p>
+  </dialog>
+
+  <!-- Área usada só na impressão do certificado -->
+  <div id="printCert" aria-hidden="true"><img id="printCertImg" alt="Certificado de conclusão"></div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <button class="back-top" id="backTop" aria-label="Voltar ao topo">↑</button>
+</body>
+</html>
