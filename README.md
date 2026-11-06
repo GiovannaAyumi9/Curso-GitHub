@@ -71,3 +71,5 @@ Basta adicionar ou alterar itens nessas listas: contadores, progresso e telas se
 
 ## Observação
 O progresso fica salvo no `localStorage` do navegador e não é sincronizado entre dispositivos ou usuários. O conteúdo é educativo; confira a documentação oficial do GitHub para mudanças recentes na interface.
+
+*grupo 9*
